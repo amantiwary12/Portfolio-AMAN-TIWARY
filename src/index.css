@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    background: hsl(253, 79%, 6%);
+    color: aliceblue;
+     
+}
