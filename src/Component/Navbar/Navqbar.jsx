@@ -61,14 +61,14 @@ const Navbar = () => {
               </a>
             </li>
           ))}
-          <li>
+          {/* <li>
             <a 
               href="/Login" 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 shadow hover:shadow-lg transform hover:-translate-y-0.5"
             >
               Login
             </a>
-          </li>
+          </li> */}
         </ul>
 
         {/* Hamburger (Mobile) */}
@@ -95,7 +95,7 @@ const Navbar = () => {
             { name: "About", path: "/About", icon: "👤" },
             { name: "Projects", path: "/Projects", icon: "💼" },
             { name: "Contact", path: "/Contact", icon: "📞" },
-            { name: "Login", path: "/Login", icon: "🔐" },
+            {/* { name: "Login", path: "/Login", icon: "🔐" }, */}
           ].map((item, index) => (
             <li key={index} className="opacity-0 transform translate-y-4" style={{ animation: isOpen ? `fadeIn 0.5s ease forwards ${index * 0.1 + 0.3}s` : "none" }}>
               <a 

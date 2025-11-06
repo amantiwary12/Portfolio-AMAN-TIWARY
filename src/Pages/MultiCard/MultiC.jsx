@@ -80,7 +80,7 @@ const MultiC = () => {
                 />
                 
                 {/* Overlay on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                <div className="absolute hover:bg-black inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
                   <h3 className="text-white text-xl font-bold mb-2">{project.title}</h3>
                   <p className="text-gray-300 text-sm mb-4">{project.description}</p>
                   
@@ -107,12 +107,7 @@ const MultiC = () => {
                   </a>
                 </div>
                 
-                {/* Featured Badge */}
-                {project.featured && (
-                  <div className="absolute top-4 right-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
-                    Featured
-                  </div>
-                )}
+                
               </div>
             </div>
           ))}

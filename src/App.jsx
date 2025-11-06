@@ -10,6 +10,7 @@ import Contact from "./Component/Navbar/Contact/Contact";
 import Applevisiop from "./Component/Navbar/Project/Applevisiop";
 import Securesphere from "./Component/Navbar/Project/Securesphere";
 import MindSTrategy from "./Component/Navbar/Project/MindSTrategy";
+import Footer from "./Component/Navbar/Footer"
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/Applevisiop" element={<Applevisiop/>} />
         <Route path="/MindSTrategy" element={<MindSTrategy/>} />
         <Route path="/secure" element={<Securesphere/>} />
+        <Route path="/footer" element={<Footer/>} />
       </Routes>
     </Router>
   );

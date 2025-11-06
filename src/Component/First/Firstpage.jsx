@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Photo from "../../Accest/myphoto.jpg"; // ✅ check path
-import Typing from "../../UI/Typing"; // ✅ make sure file exists
-import "@hellouxpavel/cssanimation"; // ✅ must be installed
+import Photo from "../../Accest/myphoto.jpg"; // ✅ Double-check this path
+import Typing from "../../UI/Typing"; // ✅ Ensure this component exists
+import "@hellouxpavel/cssanimation"; // ✅ Make sure this is installed
 import MultiC from "../../Pages/MultiCard/MultiC";
+import Mystories from "../../Pages/mystory/Mystories";
 
 const Firstpage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,6 +11,13 @@ const Firstpage = () => {
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  // Simple fallback if Typing component is missing
+  const TypingFallback = () => (
+    <div className="text-2xl lg:text-4xl text-muted-foreground h-14 flex items-center">
+      Frontend Developer & UI/UX Enthusiast
+    </div>
+  );
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white overflow-hidden relative">
@@ -44,6 +52,9 @@ const Firstpage = () => {
               className="rounded-full object-cover w-60 h-60 lg:w-72 lg:h-72 border-4 border-white/20 shadow-2xl"
               src={Photo}
               alt="Aman Tiwary"
+              onError={(e) => {
+                e.target.src = "https://via.placeholder.com/288x288/374151/FFFFFF?text=A+T";
+              }}
             />
             <div className="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r from-blue-500 to-purple-500 animate-spin-slow -z-10"></div>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium shadow-lg">
@@ -67,7 +78,7 @@ const Firstpage = () => {
             </span>
           </h1>
           <div className="flex justify-center items-center mt-6 text-2xl lg:text-4xl text-muted-foreground h-14">
-            <Typing />
+            {Typing ? <Typing /> : <TypingFallback />}
           </div>
         </div>
 
@@ -152,7 +163,7 @@ const Firstpage = () => {
           }`}
         >
           <div className="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 shadow-2xl">
-            <MultiC />
+            {MultiC ? <MultiC /> : <div>MultiCard component not found</div>}
           </div>
         </div>
 
@@ -219,6 +230,11 @@ const Firstpage = () => {
           }
         }
       `}</style>
+      
+      {/* Mystories section */}
+      <div className="w-full h-auto flex flex-col items-center pt-10 mt-20">
+        {Mystories ? <Mystories /> : <div>Mystories component not found</div>}
+      </div> 
     </div>
   );
 };
