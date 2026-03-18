@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Applevisiop = () => {
+const MindSTrategy = () => {
   return (
     <div>
-      Applevisiop
+      MindSTrategy
     </div>
   )
 }
 
-export default Applevisiop
+export default MindSTrategy

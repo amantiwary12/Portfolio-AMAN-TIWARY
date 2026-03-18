@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import Card from "../../UI/Card/Card";
 import mind from "../../Accest/mind.png";
 import secure from "../../Accest/secure.png";
-// import other images as needed
 
 const MultiC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,7 +19,7 @@ const MultiC = () => {
       description: "Tour Package Website",
       bgImage: mind,
       tags: ["React", "Tailwind", "GSAP"],
-      link: "https://mind-strategys.vercel.app/",
+      link: "/projects/mind-strategy",
       featured: true
     },
     {
@@ -27,94 +28,105 @@ const MultiC = () => {
       description: "Security Solutions Platform",
       bgImage: secure,
       tags: ["React", "Firebase", "CSS"],
-      link: "https://secure-sphere-rosy.vercel.app/",
+      link: "/projects/secure-sphere",
       featured: true
     },
     {
       id: 3,
       title: "Apple Vision Pro",
       description: "UI Clone Experience",
-      bgImage: mind, // Replace with actual image
+      bgImage: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3",
       tags: ["React", "Three.js", "Framer"],
-      link: "#",
-      featured: false
-    },
-    {
-      id: 4,
-      title: "Project Four",
-      description: "E-Commerce Solution",
-      bgImage: secure, // Replace with actual image
-      tags: ["Next.js", "Stripe", "MongoDB"],
       link: "#",
       featured: false
     }
   ];
 
   return (
-    <div className="w-full flex justify-center items-start py-12 bg-gradient-to-b from-transparent to-gray-900/20">
-      <div className="w-full max-w-7xl p-4 sm:p-6 lg:p-8">
+    <div className="w-full py-12">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Section Header */}
-        <div className={`text-center mb-12 transform transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={isVisible ? { y: 0, opacity: 1 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12"
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Projects</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-400 max-w-2xl mx-auto">
             A collection of my recent work showcasing my skills in frontend development and UI/UX design
           </p>
-        </div>
+        </motion.div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <div 
+            <motion.div
               key={project.id}
-              className={`group relative rounded-3xl overflow-hidden transform transition-all duration-700 hover:-translate-y-2 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              initial={{ y: 50, opacity: 0 }}
+              animate={isVisible ? { y: 0, opacity: 1 } : {}}
+              transition={{ delay: index * 0.2, duration: 0.8 }}
+              whileHover={{ y: -10 }}
+              className="group"
             >
-              {/* Project Card */}
-              <div className="relative h-80 rounded-3xl overflow-hidden shadow-2xl group-hover:shadow-blue-500/20 transition-all duration-500">
-                <Card 
-                  username={project.title} 
-                  bgImage={project.bgImage} 
-                  template="" 
-                />
-                
-                {/* Overlay on Hover */}
-                <div className="absolute hover:bg-black inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
-                  <h3 className="text-white text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-gray-300 text-sm mb-4">{project.description}</p>
+              <Link to={project.link}>
+                <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl">
+                  <Card 
+                    username={project.title} 
+                    bgImage={project.bgImage} 
+                  />
                   
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, i) => (
-                      <span key={i} className="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-500/30">
-                        {tag}
-                      </span>
-                    ))}
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                    <h3 className="text-white text-xl font-bold mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-300 text-sm mb-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                      {project.description}
+                    </p>
+                    
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-200">
+                      {project.tags.map((tag, i) => (
+                        <span key={i} className="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-500/30">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    
+                    {/* View Project */}
+                    <span className="inline-flex items-center text-blue-400 text-sm font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-300">
+                      View Project
+                      <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </span>
                   </div>
-                  
-                  {/* View Project Button */}
-                  <a
-                    href={project.link}
-                    target={project.link !== "#" ? "_blank" : "_self"}
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-white text-sm font-medium hover:text-blue-300 transition-colors"
-                  >
-                    View Project
-                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                    </svg>
-                  </a>
                 </div>
-                
-                
-              </div>
-            </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
 
-        {/* View All Projects Button */}
-
+        {/* View All Button */}
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={isVisible ? { y: 0, opacity: 1 } : {}}
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="text-center mt-12"
+        >
+          <Link
+            to="/projects"
+            className="inline-flex items-center px-8 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white font-semibold hover:bg-white/20 transition-all duration-300 hover:-translate-y-1"
+          >
+            View All Projects
+            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </motion.div>
       </div>
     </div>
   );

@@ -1,40 +1,27 @@
-// import React, { useState } from "react";
+import React from "react";
 import ReactTypingEffect from "react-typing-effect";
 
 const Typing = () => {
-// const [text, setText] = useState( ' ')
+  const texts = [
+    "Frontend Developer",
+    "React Specialist",
+    "UI/UX Enthusiast",
+    "Creative Coder",
+    "Problem Solver"
+  ];
 
   return (
-    <>
-    <div className="flex justify-center items-center mt-4 text-3xl lg:text-4xl text-muted-foreground">
-      <ReactTypingEffect  text={[ "Web Developer", "Frontend Developer", "React Enthusiast", "Java Developer" , "GSAP " , "Tailwind"] } />
-
-    </div>
-
-      
-{/* 
+    <div className="text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-semibold">
       <ReactTypingEffect
-        text={["Hello.", "World!!!"]}
-        cursorRenderer={(cursor) => <h1>{cursor}</h1>}
-        displayTextRenderer={(text, i) => {
-          return (
-            <h1>
-              {text.split("").map((char, i) => {
-                const key = `${i}`;
-                return (
-                  <span
-                    key={key}
-                    style={i % 2 === 0 ? { color: "magenta" } : {}}
-                  >
-                    {char}
-                  </span>
-                );
-              })}
-            </h1>
-          );
-        }}
-      /> */}
-    </>
+        text={texts}
+        speed={100}
+        eraseSpeed={50}
+        eraseDelay={2000}
+        typingDelay={500}
+        cursor="|"
+        cursorClassName="text-blue-400 animate-pulse"
+      />
+    </div>
   );
 };
 

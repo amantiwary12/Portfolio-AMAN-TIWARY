@@ -1,124 +1,137 @@
 import React, { useState, useEffect } from "react";
-import Imgs from "../../Accest/myphoto.jpg"; // Make sure this path is correct
+import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
-  // Handle scroll effect for navbar
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isOpen && !event.target.closest("nav")) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpen]);
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Projects", path: "/projects" },
+    { name: "Contact", path: "/contact" },
+  ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-md py-2" : "bg-transparent py-4"}`}>
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex items-center">
-          <img 
-            src={Imgs} 
-            alt="logo" 
-            className="h-10 w-10 mr-3 rounded-full border-2 border-white shadow-lg" 
-          />
-          <a 
-            href="/" 
-            className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent"
-          >
-            My Portfolio
-          </a>
-        </div>
-
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-8 items-center">
-          {[
-            { name: "Home", path: "/" },
-            { name: "About", path: "/About" },
-            { name: "Projects", path: "/Projects" },
-            { name: "Contact", path: "/Contact" },
-          ].map((item, index) => (
-            <li key={index}>
-              <a 
-                href={item.path} 
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors duration-300 relative group"
-              >
-                {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-            </li>
-          ))}
-          {/* <li>
-            <a 
-              href="/Login" 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 shadow hover:shadow-lg transform hover:-translate-y-0.5"
+    <nav
+      className={`fixed w-full z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-gray-900/95 backdrop-blur-md shadow-lg py-4"
+          : "bg-transparent py-6"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <Link to="/" className="relative group">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-2xl font-bold"
             >
-              Login
-            </a>
-          </li> */}
-        </ul>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                A.T
+              </span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 group-hover:w-full transition-all duration-300"></span>
+            </motion.div>
+          </Link>
 
-        {/* Hamburger (Mobile) */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-gray-700 dark:text-gray-300 focus:outline-none transition-transform duration-300 transform hover:rotate-90"
-            aria-label="Toggle menu"
-          >
-            <div className="w-6 h-6 flex flex-col justify-between">
-              <span className={`w-full h-0.5 bg-current rounded transform transition duration-300 ${isOpen ? 'rotate-45 translate-y-2.5' : ''}`}></span>
-              <span className={`w-full h-0.5 bg-current rounded transition duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-              <span className={`w-full h-0.5 bg-current rounded transform transition duration-300 ${isOpen ? '-rotate-45 -translate-y-2.5' : ''}`}></span>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div className={`md:hidden fixed top-16 left-0 w-full h-0 bg-white dark:bg-gray-900 backdrop-blur-lg bg-opacity-95 dark:bg-opacity-95 overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? "h-screen" : ""}`}>
-        <ul className="flex flex-col items-center justify-center space-y-8 h-full">
-          {[
-            { name: "Home", path: "/", icon: "🏠" },
-            { name: "About", path: "/About", icon: "👤" },
-            { name: "Projects", path: "/Projects", icon: "💼" },
-            { name: "Contact", path: "/Contact", icon: "📞" },
-            {/* { name: "Login", path: "/Login", icon: "🔐" }, */}
-          ].map((item, index) => (
-            <li key={index} className="opacity-0 transform translate-y-4" style={{ animation: isOpen ? `fadeIn 0.5s ease forwards ${index * 0.1 + 0.3}s` : "none" }}>
-              <a 
-                href={item.path} 
-                className="text-2xl font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 flex items-center"
-                onClick={() => setIsOpen(false)}
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item, index) => (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <span className="mr-3 text-xl">{item.icon}</span>
-                {item.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+                <Link
+                  to={item.path}
+                  className={`relative text-sm font-medium transition-all duration-300 group ${
+                    location.pathname === item.path
+                      ? "text-blue-400"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  {item.name}
+                  <span
+                    className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-300 ${
+                      location.pathname === item.path ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                  ></span>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-gray-300 hover:text-white focus:outline-none"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <motion.div
+          initial={false}
+          animate={isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="md:hidden overflow-hidden"
+        >
+          <div className="pt-4 pb-3 space-y-3">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                onClick={() => setIsOpen(false)}
+                className={`block px-3 py-2 text-base font-medium rounded-lg transition-all duration-300 ${
+                  location.pathname === item.path
+                    ? "bg-blue-600/20 text-blue-400"
+                    : "text-gray-300 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </nav>
   );
 };
